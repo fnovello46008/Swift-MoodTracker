@@ -12,6 +12,8 @@ class ViewController: UIViewController {
     @IBAction func ExcitedButton(_ sender: Any) {
         backgroundColours = [UIColor(red: 246/255, green: 168/255, blue:166/255, alpha: 1),
                              UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)];
+        
+        print("pressed")
             
     }
     
