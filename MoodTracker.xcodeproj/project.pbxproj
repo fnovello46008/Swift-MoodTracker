@@ -15,6 +15,7 @@
 		7E384614254CF8B300BD39F1 /* MoodTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E384613254CF8B300BD39F1 /* MoodTrackerTests.swift */; };
 		7E38461F254CF8B300BD39F1 /* MoodTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E38461E254CF8B300BD39F1 /* MoodTrackerUITests.swift */; };
 		7E384635254D032900BD39F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E384634254D032900BD39F1 /* Main.storyboard */; };
+		7EC16D01254E0EE3002367F6 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC16D00254E0EE3002367F6 /* GraphViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		7E38461E254CF8B300BD39F1 /* MoodTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodTrackerUITests.swift; sourceTree = "<group>"; };
 		7E384620254CF8B300BD39F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7E384634254D032900BD39F1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		7EC16D00254E0EE3002367F6 /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				7E3845FE254CF8B200BD39F1 /* SceneDelegate.swift */,
 				7E384600254CF8B200BD39F1 /* ViewController.swift */,
 				7E384605254CF8B200BD39F1 /* Assets.xcassets */,
+				7EC16D00254E0EE3002367F6 /* GraphViewController.swift */,
 				7E384634254D032900BD39F1 /* Main.storyboard */,
 				7E384607254CF8B200BD39F1 /* LaunchScreen.storyboard */,
 				7E38460A254CF8B200BD39F1 /* Info.plist */,
@@ -259,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E384601254CF8B200BD39F1 /* ViewController.swift in Sources */,
+				7EC16D01254E0EE3002367F6 /* GraphViewController.swift in Sources */,
 				7E3845FD254CF8B200BD39F1 /* AppDelegate.swift in Sources */,
 				7E3845FF254CF8B200BD39F1 /* SceneDelegate.swift in Sources */,
 			);

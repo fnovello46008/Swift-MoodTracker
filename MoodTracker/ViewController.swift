@@ -6,14 +6,13 @@
 //
 
 import UIKit
+import CoreMotion
 
 class ViewController: UIViewController {
 
     @IBAction func ExcitedButton(_ sender: Any) {
         backgroundColours = [UIColor(red: 246/255, green: 168/255, blue:166/255, alpha: 1),
                              UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)];
-        
-        print("pressed")
             
     }
     
@@ -46,6 +45,9 @@ class ViewController: UIViewController {
     
     @IBOutlet var moodView: UIView!
     
+    var orientationLast = UIInterfaceOrientation(rawValue: 0)!
+    var motionManager: CMMotionManager?
+    
     var backgroundColours = [UIColor()]
     var backgroundLoop = 0
     
@@ -54,17 +56,24 @@ class ViewController: UIViewController {
 
 //    backgroundColours = [UIColor(red: 175/255, green: 213/255, blue:170/255, alpha: 1),UIColor(red: 90/255, green: 110/255, blue: 175/255, alpha: 1)];
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        UIView.setAnimationsEnabled(true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view.
-
+        
         backgroundColours = [UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1),UIColor(red: 90/255, green: 110/255, blue: 175/255, alpha: 1)]
          backgroundLoop = 0
          self.animateBackgroundColour()
         
+        self.initializeMotionManager()
+        
     }
+    
+    
     
     func animateBackgroundColour () {
         if backgroundLoop < backgroundColours.count - 1 {
@@ -83,6 +92,67 @@ class ViewController: UIViewController {
 
     }
     
+    func initializeMotionManager() {
+     motionManager = CMMotionManager()
+     motionManager?.accelerometerUpdateInterval = 0.2
+     motionManager?.gyroUpdateInterval = 0.2
+     motionManager?.startAccelerometerUpdates(to: (OperationQueue.current)!, withHandler: {
+        (accelerometerData, error) -> Void in
+        if error == nil {
+            self.outputAccelertionData((accelerometerData?.acceleration)!)
+        }
+        else {
+            print("\(error!)")
+        }
+        })
+     }
+    
+    func outputAccelertionData(_ acceleration: CMAcceleration) {
+       var orientationNew: UIInterfaceOrientation
+       if acceleration.x >= 0.75 {
+           orientationNew = .landscapeLeft
+         UIView.setAnimationsEnabled(false)
+           performSegue(withIdentifier: "Graph Segue", sender: nil)
+           print("landscapeLeft")
+       }
+       else if acceleration.x <= -0.75 {
+           orientationNew = .landscapeRight
+        UIView.setAnimationsEnabled(false)
+           performSegue(withIdentifier: "Graph Segue", sender: nil)
+           print("landscapeRight")
+       }
+       else if acceleration.y <= -0.75 {
+           orientationNew = .portrait
+           print("portrait")
 
+       }
+       else if acceleration.y >= 0.75 {
+           orientationNew = .portraitUpsideDown
+           print("portraitUpsideDown")
+       }
+       else {
+           // Consider same as last time
+           return
+       }
+
+       if orientationNew == orientationLast {
+           return
+       }
+       orientationLast = orientationNew
+   }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        motionManager = nil
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+
+    
 }
+
+
+
+
 
