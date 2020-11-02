@@ -7,42 +7,10 @@
 
 import UIKit
 import CoreMotion
+import Charts
 
 class ViewController: UIViewController {
 
-    @IBAction func ExcitedButton(_ sender: Any) {
-        backgroundColours = [UIColor(red: 246/255, green: 168/255, blue:166/255, alpha: 1),
-                             UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)];
-            
-    }
-    
-    @IBAction func HappyButton(_ sender: Any) {
-        backgroundColours = [UIColor(red: 249/255, green: 240/255, blue:193/255, alpha: 1),
-                             UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)];
-    }
-    
-    @IBAction func ContentButton(_ sender: Any) {
-        backgroundColours = [UIColor(red: 192/255, green: 236/255, blue:204/255, alpha: 1),
-                             UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)];
-    }
-    
-    @IBAction func SadButton(_ sender: Any) {
-        backgroundColours = [UIColor(red: 112/255, green: 161/255, blue:215/255, alpha: 1),
-                             UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)];
-    }
-    
-    @IBAction func DepressedButton(_ sender: Any) {
-        backgroundColours = [UIColor(red: 67/255, green: 70/255, blue:109/255, alpha: 1),
-                             UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)];
-    }
-    @IBAction func AngryButton(_ sender: Any) {
-        backgroundColours = [UIColor(red: 220/255, green: 69/255, blue:61/255, alpha: 1),
-                             UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)];
-    }
-    
-    
-    
-    
     @IBOutlet var moodView: UIView!
     
     var orientationLast = UIInterfaceOrientation(rawValue: 0)!
@@ -51,18 +19,20 @@ class ViewController: UIViewController {
     var backgroundColours = [UIColor()]
     var backgroundLoop = 0
     
+    var selectedMood:String = "No mood selected";
+    
     
 
 
 //    backgroundColours = [UIColor(red: 175/255, green: 213/255, blue:170/255, alpha: 1),UIColor(red: 90/255, green: 110/255, blue: 175/255, alpha: 1)];
     
     override func viewDidAppear(_ animated: Bool) {
-        UIView.setAnimationsEnabled(true)
+        //UIView.setAnimationsEnabled(true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //UIView.setAnimationsEnabled(true)
         // Do any additional setup after loading the view.
         
         backgroundColours = [UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1),UIColor(red: 90/255, green: 110/255, blue: 175/255, alpha: 1)]
@@ -71,6 +41,74 @@ class ViewController: UIViewController {
         
         self.initializeMotionManager()
         
+    }
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        motionManager = nil
+        
+        if segue.identifier == "Graph Segue" {
+            //let vc = segue.destination as! GraphViewController
+            
+//            vc.amounts = amounts
+//            vc.names = names
+//            vc.categories = categories
+//
+//            vc.transactions = transactions
+//            vc.categoriesAndAmounts = categoriesAndAmounts
+//            vc.modalPresentationStyle = .fullScreen
+            
+            //vc.mood = selectedMood
+            
+        }
+        
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+    
+    @IBAction func ExcitedButton(_ sender: Any) {
+        backgroundColours = [UIColor(red: 246/255, green: 168/255, blue:166/255, alpha: 1),
+                             UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)];
+        
+        selectedMood = "Excited"
+            
+    }
+    
+    @IBAction func HappyButton(_ sender: Any) {
+        backgroundColours = [UIColor(red: 249/255, green: 240/255, blue:193/255, alpha: 1),
+                             UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)];
+        selectedMood = "Happy"
+    }
+    
+    @IBAction func ContentButton(_ sender: Any) {
+        backgroundColours = [UIColor(red: 192/255, green: 236/255, blue:204/255, alpha: 1),
+                             UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)];
+        
+        selectedMood = "Content"
+    }
+    
+    @IBAction func SadButton(_ sender: Any) {
+        backgroundColours = [UIColor(red: 112/255, green: 161/255, blue:215/255, alpha: 1),
+                             UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)];
+        
+        selectedMood = "Sad"
+    }
+    
+    @IBAction func DepressedButton(_ sender: Any) {
+        backgroundColours = [UIColor(red: 67/255, green: 70/255, blue:109/255, alpha: 1),
+                             UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)];
+        
+        selectedMood = "Depressed"
+    }
+    @IBAction func AngryButton(_ sender: Any) {
+        backgroundColours = [UIColor(red: 220/255, green: 69/255, blue:61/255, alpha: 1),
+                             UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)];
+        
+        selectedMood = "Angry"
     }
     
     
@@ -111,24 +149,24 @@ class ViewController: UIViewController {
        var orientationNew: UIInterfaceOrientation
        if acceleration.x >= 0.75 {
            orientationNew = .landscapeLeft
-         UIView.setAnimationsEnabled(false)
+         //UIView.setAnimationsEnabled(false)
            performSegue(withIdentifier: "Graph Segue", sender: nil)
-           print("landscapeLeft")
+           //print("landscapeLeft")
        }
        else if acceleration.x <= -0.75 {
            orientationNew = .landscapeRight
-        UIView.setAnimationsEnabled(false)
+        //UIView.setAnimationsEnabled(false)
            performSegue(withIdentifier: "Graph Segue", sender: nil)
-           print("landscapeRight")
+        // print("landscapeRight")
        }
        else if acceleration.y <= -0.75 {
            orientationNew = .portrait
-           print("portrait")
+        //print("portrait")
 
        }
        else if acceleration.y >= 0.75 {
            orientationNew = .portraitUpsideDown
-           print("portraitUpsideDown")
+        //print("portraitUpsideDown")
        }
        else {
            // Consider same as last time
@@ -141,16 +179,10 @@ class ViewController: UIViewController {
        orientationLast = orientationNew
    }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        motionManager = nil
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
 
     
 }
+
 
 
 

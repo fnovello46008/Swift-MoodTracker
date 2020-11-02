@@ -178,38 +178,41 @@
             </objects>
             <point key="canvasLocation" x="425" y="-600"/>
         </scene>
-        <!--Graph View Controller-->
+        <!--Line Chart View Controller-->
         <scene sceneID="e6q-3H-hXw">
             <objects>
-                <viewController modalTransitionStyle="flipHorizontal" modalPresentationStyle="fullScreen" id="8dq-1L-w7b" customClass="GraphViewController" customModule="MoodTracker" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="zac-kY-LSf">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9vi-Dh-9Mp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController modalTransitionStyle="flipHorizontal" modalPresentationStyle="fullScreen" id="8dq-1L-w7b" customClass="LineChartViewController" customModule="MoodTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zac-kY-LSf" userLabel="View">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Graph" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hjr-wH-0Ov">
-                                <rect key="frame" x="166" y="294" width="47" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jkn-b2-488" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7pF-QX-93b"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Jkn-b2-488" secondAttribute="bottom" id="4eC-g6-GiM"/>
+                            <constraint firstItem="Jkn-b2-488" firstAttribute="leading" secondItem="7pF-QX-93b" secondAttribute="leading" id="Hep-8K-RhQ"/>
+                            <constraint firstItem="Jkn-b2-488" firstAttribute="top" secondItem="7pF-QX-93b" secondAttribute="top" id="M2h-aW-ZHx"/>
+                            <constraint firstItem="Jkn-b2-488" firstAttribute="trailing" secondItem="7pF-QX-93b" secondAttribute="trailing" id="fFZ-td-PBQ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="m0a-kB-OQp"/>
                     <connections>
-                        <segue destination="fWq-ua-Mv1" kind="show" identifier="Mood Seque" id="Q7x-Wh-Jr4"/>
+                        <outlet property="chtChart" destination="Jkn-b2-488" id="5RK-uz-ZP3"/>
+                        <segue destination="fWq-ua-Mv1" kind="show" identifier="Mood Segue" id="Q7x-Wh-Jr4"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9vi-Dh-9Mp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1431" y="-600"/>
+            <point key="canvasLocation" x="1429.5999999999999" y="-600.44977511244383"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="NAc-J8-Wf3">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eYM-T2-eRI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tabBarController id="gaa-W9-fgD" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rM7-dO-10B">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -221,6 +224,7 @@
                         <segue destination="GmL-rx-CDm" kind="relationship" relationship="viewControllers" id="nLl-aD-V1v"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eYM-T2-eRI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-665" y="75"/>
         </scene>
@@ -228,6 +232,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
