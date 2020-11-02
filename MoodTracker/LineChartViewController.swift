@@ -12,13 +12,18 @@ class LineChartViewController: UIViewController {
     
     var numbers : [Double] = [10,10,200,150,15,30,50,45] //This is where we are going to store all the numbers. This can be a set of numbers that come from a Realm database, Core data, External API's or where ever else
     
+    var moodValues: [Double] = []
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         //UIView.setAnimationsEnabled(true)
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
             self.initializeMotionManager()
+        numbers = moodValues
         
         // Do any additional setup after loading the view, typically from a nib.
         updateGraph()
