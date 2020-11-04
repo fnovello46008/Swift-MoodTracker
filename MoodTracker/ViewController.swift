@@ -155,9 +155,9 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         motionManager = nil
         
-        if segue.identifier == "Graph Segue" && didSubmit == true {
+        if segue.identifier == "Graph Segue"{
             let vc = segue.destination as! LineChartViewController
-            
+
 //            vc.amounts = amounts
 //            vc.names = names
 //            vc.categories = categories
@@ -165,13 +165,13 @@ class ViewController: UIViewController {
 //            vc.transactions = transactions
 //            vc.categoriesAndAmounts = categoriesAndAmounts
 //            vc.modalPresentationStyle = .fullScreen
-            
-            
+
+
             vc.moodValues = self.appDelegate.moodValues
-            
+
             print("moodes submitted \(self.appDelegate.moodValues)")
-            
-            
+
+
         }
         
     }

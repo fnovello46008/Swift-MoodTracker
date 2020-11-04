@@ -23,6 +23,7 @@ class LineChartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
             self.initializeMotionManager()
+     
         numbers = moodValues
         
         // Do any additional setup after loading the view, typically from a nib.
