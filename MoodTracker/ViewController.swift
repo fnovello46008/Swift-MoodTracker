@@ -9,6 +9,7 @@ import UIKit
 import CoreMotion
 import Charts
 import QuartzCore
+import CoreData
 
 class ViewController: UIViewController {
 
@@ -29,11 +30,65 @@ class ViewController: UIViewController {
     @IBOutlet weak var MoodSlider: UISlider!
     
     
+    //CORE DATA
+    var coreDataMoodValues:[NSManagedObject] = []
+    
+    
+    func save(moodValue: Double)
+    {
+        guard let appDelegate = UIApplication.shared.delegate
+                as? AppDelegate else {return}
+        
+        let manageContext = appDelegate.persistentContainer.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: "MoodValueEntity", in: manageContext)!
+        
+        let coreMoodValue = NSManagedObject(entity: entity, insertInto: manageContext)
+        
+        coreMoodValue.setValue(moodValue, forKey: "moodValue")
+        
+        do {
+            try manageContext.save()
+            coreDataMoodValues.append(coreMoodValue)
+            
+            print("MoodValues\(coreDataMoodValues)")
+        }catch let error as NSError{
+            print("could not save to core data\(error)")
+        }
+        
+    }
 
+    
+    func deleteAllData(entity:String)
+    {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        fetchRequest.returnsObjectsAsFaults = false
+       
+        do {
+            let results = try appDelegate.persistentContainer.viewContext.fetch(fetchRequest)
+            for object in results
+            {
+                guard let objectData = object as? NSManagedObject else {continue}
+                appDelegate.persistentContainer.viewContext.delete(objectData)
+            }
+        } catch let error {
+            print("Detele all data in \(entity) error :", error)
+        }
+        
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
+
+    
+        
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         
-        didSubmit = false
+        
 
     }
     
@@ -41,6 +96,10 @@ class ViewController: UIViewController {
      
         
         super.viewDidLoad()
+        
+
+        
+        //print(self.appDelegate.moodValues)
         
         
         
@@ -54,6 +113,10 @@ class ViewController: UIViewController {
         
         self.animateBackgroundColour()
         self.initializeMotionManager()
+        
+     
+        
+        
         
     
 
@@ -166,10 +229,11 @@ class ViewController: UIViewController {
 //            vc.categoriesAndAmounts = categoriesAndAmounts
 //            vc.modalPresentationStyle = .fullScreen
 
-
+           
+            
             vc.moodValues = self.appDelegate.moodValues
 
-            print("moodes submitted \(self.appDelegate.moodValues)")
+            print("mood submitted \(self.appDelegate.moodValues)")
 
 
         }
@@ -181,6 +245,15 @@ class ViewController: UIViewController {
     }
     
     
+    @IBAction func ClearButton(_ sender: Any) {
+        
+        print("hello!!")
+        
+        self.appDelegate.moodValues = []
+        
+        self.deleteAllData(entity: "MoodValueEntity")
+        
+    }
     @IBAction func SubmitMood(_ sender: Any) {
         
         let alert = UIAlertController(title: "Submit Mood?", message: "Are you sure this is how you feel?", preferredStyle: .alert)
@@ -189,7 +262,9 @@ class ViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
                 //run your function here
                 self.submitHandler()
-            self.appDelegate.moodValues.append(Double(self.MoodSlider.value * 100))
+                self.appDelegate.moodValues.append(Double(self.MoodSlider.value * 100))
+                self.save(moodValue: Double(self.MoodSlider.value * 100))
+            
             }))
 
         alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
