@@ -246,14 +246,24 @@ class ViewController: UIViewController {
     
     
     @IBAction func ClearButton(_ sender: Any) {
+                
+        let alert = UIAlertController(title: "Clear Data", message: "Are you sure you want to clear all Data?", preferredStyle: .alert)
         
-        print("hello!!")
         
-        self.appDelegate.moodValues = []
-        
-        self.deleteAllData(entity: "MoodValueEntity")
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                //run your function here
+            
+                self.appDelegate.moodValues = []
+                self.deleteAllData(entity: "MoodValueEntity")
+            
+            }))
+
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+
+        self.present(alert, animated: true)
         
     }
+    
     @IBAction func SubmitMood(_ sender: Any) {
         
         let alert = UIAlertController(title: "Submit Mood?", message: "Are you sure this is how you feel?", preferredStyle: .alert)
