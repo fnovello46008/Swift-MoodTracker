@@ -48,6 +48,10 @@ class ViewController: UIViewController,ChartViewDelegate {
     
     var moodCoordsValues = MoodCoordsValues(x: 0, y: 0)
     
+    
+    var context: NSManagedObjectContext{
+        return appDelegate.persistentContainer.viewContext
+     }
 //
 //    func save(moodValue: Double)
 //    {
@@ -73,32 +77,96 @@ class ViewController: UIViewController,ChartViewDelegate {
 //
 //    }
 //
+    
+//    func saveMood(mood: Mood)
+//    {
+//
+//
+//        guard let appDelegate = UIApplication.shared.delegate
+//                as? AppDelegate else {return}
+//
+//        let manageContext = appDelegate.persistentContainer.viewContext
+//
+//        let entity = NSEntityDescription.entity(forEntityName: "MoodValueEntity", in: manageContext)!
+//
+//        var coreDataMood = NSManagedObject(entity: entity, insertInto: manageContext)
+//
+//         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "MoodValueEntity")
+//            fetchRequest.predicate = NSPredicate(format: "moodId = %@", String(mood.moodId))
+//
+//         let results = try? manageContext.fetch(fetchRequest)
+//
+//         if results?.count == 0 {
+//            // here you are inserting
+//            //user = Users(context: context)
+//
+//            coreDataMood.setValue(mood.moodValue,      forKey: "moodValue")
+//            coreDataMood.setValue(mood.moodDate, forKey: "moodDate")
+//            coreDataMood.setValue(mood.moodId, forKey: "moodId")
+//            coreDataMood.setValue(mood.moodNote, forKey: "moodNote")
+//
+//            print("hello")
+//
+//
+//         } else {
+//            // here you are updating
+//            //user = results?.first
+//
+//            print("resutls\(results)" )
+//
+//            print("hello")
+//         }
+//
+//
+//
+//        do {
+//            try manageContext.save()
+//            coreDataMoodValues.append(coreDataMood)
+//
+//            //print("MoodValues\(coreDataMoodValues)")
+//        }catch let error as NSError{
+//            print("could not save to core data\(error)")
+//        }
+//
+//
+//
+//    }
+    
+    
     func saveMood(mood: Mood)
     {
+
+
         guard let appDelegate = UIApplication.shared.delegate
                 as? AppDelegate else {return}
-        
+
         let manageContext = appDelegate.persistentContainer.viewContext
-        
+
         let entity = NSEntityDescription.entity(forEntityName: "MoodValueEntity", in: manageContext)!
-        
+
         let coreDataMood = NSManagedObject(entity: entity, insertInto: manageContext)
-        
+
         coreDataMood.setValue(mood.moodValue,      forKey: "moodValue")
-        coreDataMood.setValue(mood.moodNote,       forKey: "moodNote")
         coreDataMood.setValue(mood.moodDate, forKey: "moodDate")
-        
+        coreDataMood.setValue(mood.moodId, forKey: "moodId")
+        coreDataMood.setValue(mood.moodNote, forKey: "moodNote")
+
+
+
+
         do {
             try manageContext.save()
             coreDataMoodValues.append(coreDataMood)
-            
+
             //print("MoodValues\(coreDataMoodValues)")
         }catch let error as NSError{
             print("could not save to core data\(error)")
         }
 
-        
+
+
     }
+    
 
     
     func deleteAllData(entity:String)
@@ -141,7 +209,7 @@ class ViewController: UIViewController,ChartViewDelegate {
         super.viewDidLoad()
         self.chartView.delegate = self
         
-        //self.deleteAllData(entity: "MoodValueEntity")
+       // self.deleteAllData(entity: "MoodValueEntity")
         
         //print(self.appDelegate.moodValues)
         
@@ -196,7 +264,7 @@ class ViewController: UIViewController,ChartViewDelegate {
     @objc func keyboardWillAppear() {
         //Do something here
         
-        print("Keyboard appeared")
+       // print("Keyboard appeared")
         
         ClearSubmitButton.setTitle("Submit", for: .normal)
         
@@ -211,6 +279,9 @@ class ViewController: UIViewController,ChartViewDelegate {
     }
     
     
+
+    
+    
     
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         
@@ -222,16 +293,24 @@ class ViewController: UIViewController,ChartViewDelegate {
                 //Chart Value selected
                 self.selectedMood = mood
                 self.AddNoteViewButton.isHidden = false
+                
+                //print(self.selectedMood?.moodNote)
+                
                 if let unwrappedNote = self.selectedMood?.moodNote {
-                    print(unwrappedNote)
+
                     self.AddNoteViewButton.setTitle("View Note", for: .normal)
+                    self.selectedMood?.moodNote = unwrappedNote
                     self.NoteView.text = self.selectedMood?.moodNote
+        
+
                 }else { self.AddNoteViewButton.setTitle("Add Note", for: .normal)
+                    
                     self.NoteView.text = ""
                 }
-            }
-        
+          }
+    
         }
+        
     }
     
     
@@ -515,18 +594,61 @@ class ViewController: UIViewController,ChartViewDelegate {
             self.present(alert, animated: true)
         }else {
             
+            //SUBMITT NOTE
+            
             dismissKeyboard()
+            
             self.selectedMood?.moodNote = NoteView.text
+            
+            //saveMood(mood: selectedMood!)
             
             if let unwrappedNote = self.selectedMood?.moodNote
             {
                 self.selectedMood?.moodNote = unwrappedNote
+                
                 self.AddNoteViewButton.setTitle("View Note", for: .normal)
             }
 
         }
                 
         
+    }
+    
+    func updateMood(mood:Mood)
+    {
+        //let user: Users!
+        
+       // print(mood.moodNote)
+        
+        saveMood(mood: mood)
+        for mood in appDelegate.moods
+        {
+            
+            if mood.moodNote != nil
+            {
+                print(mood.moodNote!)
+        
+            }
+        }
+
+
+//        let fetchUser = NSFetchRequest<NSManagedObject>(entityName: "MoodValueEntity")
+//        fetchUser.predicate = NSPredicate(format: "moodId = %@", String(mood.moodId))
+//
+//        let results = try? context.fetch(fetchUser)
+//
+//        if results?.count == 0 {
+//           // here you are inserting
+//           //user = Users(context: context)
+//            print("null")
+//            saveMood(mood: mood)
+//        } else {
+//           // here you are updating
+//           //user = results?.first
+//
+//            print(results)
+//        }
+
     }
     
     @IBAction func SubmitMood(_ sender: Any) {

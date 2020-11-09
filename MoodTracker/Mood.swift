@@ -8,9 +8,10 @@
 import Foundation
 
 class Mood {
-    static var moodId: Int = 0;
+    static var MoodId: Int = 0;
+    var moodId = 0
     var moodValue: Double = 0.0;
-    var moodNote: String?;
+    var moodNote: String?
     var moodDate = Date()
     var time = TimeInterval()
     var isSelected: Bool = false
@@ -23,10 +24,12 @@ class Mood {
     var coords = CoordinateValues(x: 0, y: 0)
     
     init(submitMoodWithValue moodValue: Double, moodDate:Date, coords:CoordinateValues) {
-        Mood.moodId += 1
+        Mood.MoodId += 1
         self.moodValue      = moodValue
         self.moodDate       = moodDate
         self.coords         = coords
+        
+        self.moodId = Mood.MoodId
     }
     
     func getMood(AtCoordinate x: Double, y: Double) -> Mood?

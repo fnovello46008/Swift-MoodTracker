@@ -18,12 +18,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var calander: Calendar = Calendar.current
    
     
+    
+    var manageContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+     }
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         
         
-        let manageContext = self.persistentContainer.viewContext
+       
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "MoodValueEntity")
         
@@ -43,18 +48,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 {
                     mood.setValue(Date(), forKey: "moodDate")
                 }
-                   
                 
-                self.moods.append(Mood(submitMoodWithValue: mood.value(forKey: "moodValue") as! Double, moodDate: mood.value(forKey: "moodDate") as! Date,coords: Mood.CoordinateValues(x: 50, y: 50)))
+                let currentMood = Mood(submitMoodWithValue: mood.value(forKey: "moodValue") as! Double, moodDate: mood.value(forKey: "moodDate") as! Date,coords: Mood.CoordinateValues(x: 50, y: 50))
+                
+            
+                
+//                if let unwrappedMoodNote = currentMood.moodNote {
+//                    currentMood.moodNote = unwrappedMoodNote
+//                    print("mood note")
+//
+//                }else { print("error")}
+                
+                //print(currentMood.moodNote)
+                
+                self.moods.append(currentMood)
+                
+                
                                 
             }
             
-            for mood in moods
-            {
+//            for mood in moods
+//            {
                // print("mood value: \(mood.moodValue)")
                 //print("\(calander.component(.hour, from: mood.moodDate)):\(calander.component(.minute, from: mood.moodDate)):\(calander.component(.second, from: mood.moodDate))")
                 
-            }
+//            }
      
             
             //print("application launched\(moodValues)")
