@@ -45,14 +45,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                    
                 
-                self.moods.append(Mood(submitMoodWithValue: mood.value(forKey: "moodValue") as! Double, moodNote: "", moodDate: mood.value(forKey: "moodDate") as! Date))
+                self.moods.append(Mood(submitMoodWithValue: mood.value(forKey: "moodValue") as! Double, moodDate: mood.value(forKey: "moodDate") as! Date,coords: Mood.CoordinateValues(x: 50, y: 50)))
                                 
             }
             
             for mood in moods
             {
-                print("mood value: \(mood.moodValue)")
-                print("\(calander.component(.hour, from: mood.moodDate)):\(calander.component(.minute, from: mood.moodDate)):\(calander.component(.second, from: mood.moodDate))")
+               // print("mood value: \(mood.moodValue)")
+                //print("\(calander.component(.hour, from: mood.moodDate)):\(calander.component(.minute, from: mood.moodDate)):\(calander.component(.second, from: mood.moodDate))")
                 
             }
      

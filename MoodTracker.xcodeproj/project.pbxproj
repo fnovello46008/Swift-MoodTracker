@@ -17,6 +17,7 @@
 		7E384614254CF8B300BD39F1 /* MoodTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E384613254CF8B300BD39F1 /* MoodTrackerTests.swift */; };
 		7E38461F254CF8B300BD39F1 /* MoodTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E38461E254CF8B300BD39F1 /* MoodTrackerUITests.swift */; };
 		7E384635254D032900BD39F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E384634254D032900BD39F1 /* Main.storyboard */; };
+		7E3E010E2559737B0027719E /* DataPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3E010D2559737B0027719E /* DataPointViewController.swift */; };
 		7EBB60B1254F4034008C9037 /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBB60B0254F4034008C9037 /* LineChartViewController.swift */; };
 		7EC01D1D2555BE1700848F02 /* MoodsModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7EC01D1B2555BE1700848F02 /* MoodsModel.xcdatamodeld */; };
 		7EC16D01254E0EE3002367F6 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC16D00254E0EE3002367F6 /* GraphViewController.swift */; };
@@ -61,6 +62,7 @@
 		7E38461E254CF8B300BD39F1 /* MoodTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodTrackerUITests.swift; sourceTree = "<group>"; };
 		7E384620254CF8B300BD39F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7E384634254D032900BD39F1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		7E3E010D2559737B0027719E /* DataPointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPointViewController.swift; sourceTree = "<group>"; };
 		7EBB60B0254F4034008C9037 /* LineChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartViewController.swift; sourceTree = "<group>"; };
 		7EC01D1C2555BE1700848F02 /* MoodsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoodsModel.xcdatamodel; sourceTree = "<group>"; };
 		7EC16D00254E0EE3002367F6 /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
@@ -142,13 +144,14 @@
 				7E3845FC254CF8B200BD39F1 /* AppDelegate.swift */,
 				7E3845FE254CF8B200BD39F1 /* SceneDelegate.swift */,
 				7E384600254CF8B200BD39F1 /* ViewController.swift */,
-				7EBB60B0254F4034008C9037 /* LineChartViewController.swift */,
+				7E3E010D2559737B0027719E /* DataPointViewController.swift */,
+				7E384634254D032900BD39F1 /* Main.storyboard */,
 				7EC411EB25587E3A0048B7E5 /* Mood.swift */,
 				7EDB08C82550552E008EC34D /* MoodBar.swift */,
 				7EC01D1B2555BE1700848F02 /* MoodsModel.xcdatamodeld */,
 				7E384605254CF8B200BD39F1 /* Assets.xcassets */,
 				7EC16D00254E0EE3002367F6 /* GraphViewController.swift */,
-				7E384634254D032900BD39F1 /* Main.storyboard */,
+				7EBB60B0254F4034008C9037 /* LineChartViewController.swift */,
 				7E384607254CF8B200BD39F1 /* LaunchScreen.storyboard */,
 				7E38460A254CF8B200BD39F1 /* Info.plist */,
 			);
@@ -423,6 +426,7 @@
 			files = (
 				7E384601254CF8B200BD39F1 /* ViewController.swift in Sources */,
 				7EC16D01254E0EE3002367F6 /* GraphViewController.swift in Sources */,
+				7E3E010E2559737B0027719E /* DataPointViewController.swift in Sources */,
 				7EC01D1D2555BE1700848F02 /* MoodsModel.xcdatamodeld in Sources */,
 				7EDB08C92550552E008EC34D /* MoodBar.swift in Sources */,
 				7EC411EC25587E3A0048B7E5 /* Mood.swift in Sources */,

@@ -11,10 +11,10 @@ class LineChartViewController: UIViewController {
 
     @IBOutlet weak var chtChart: LineChartView!
     
-    var orientationLast = UIInterfaceOrientation(rawValue: 0)!
-    var motionManager: CMMotionManager?
+    //var orientationLast = UIInterfaceOrientation(rawValue: 0)!
+    //var motionManager: CMMotionManager?
     
-    var numbers : [Double] = [10,10,200,150,15,30,50,45] //This is where we are going to store all the numbers. This can be a set of numbers that come from a Realm database, Core data, External API's or where ever else
+   // var numbers : [Double] = [10,10,200,150,15,30,50,45] //This is where we are going to store all the numbers. This can be a set of numbers that come from a Realm database, Core data, External API's or where ever else
     
     var moodValues: [Double] = []
     var moods:[Mood] = []
@@ -31,7 +31,7 @@ class LineChartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            self.initializeMotionManager()
+            //self.initializeMotionManager()
      
         //OLD
        // numbers = moodValues
@@ -138,60 +138,60 @@ class LineChartViewController: UIViewController {
 //        chtChart.data?.addEntry(looplineChartEntry[0], dataSetIndex: 0)
     }
     
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscape
-    }
-    
-        func initializeMotionManager() {
-         motionManager = CMMotionManager()
-         motionManager?.accelerometerUpdateInterval = 0.2
-         motionManager?.gyroUpdateInterval = 0.2
-         motionManager?.startAccelerometerUpdates(to: (OperationQueue.current)!, withHandler: {
-            (accelerometerData, error) -> Void in
-            if error == nil {
-                self.outputAccelertionData((accelerometerData?.acceleration)!)
-            }
-            else {
-                print("\(error!)")
-            }
-            })
-         }
-    
-        func outputAccelertionData(_ acceleration: CMAcceleration) {
-           var orientationNew: UIInterfaceOrientation
-           if acceleration.x >= 0.75 {
-               orientationNew = .landscapeLeft
-    
-            //print("landscapeLeft")
-           }
-           else if acceleration.x <= -0.75 {
-               orientationNew = .landscapeRight
-            //print("landscapeRight")
-           }
-           else if acceleration.y <= -0.75 {
-               orientationNew = .portrait
-           // performSegue(withIdentifier: "Mood Seque", sender: nil)
-            //print("portrait")q
-                //UIView.setAnimationsEnabled(false)
-                performSegue(withIdentifier: "Mood Segue", sender: nil)
-    
-           }
-           else if acceleration.y >= 0.75 {
-               orientationNew = .portraitUpsideDown
-            //performSegue(withIdentifier: "Mood Seque", sender: nil)
-            //print("portraitUpsideDown")
-                //UIView.setAnimationsEnabled(false)
-                performSegue(withIdentifier: "Mood Segue", sender: nil)
-           }
-           else {
-               // Consider same as last time
-               return
-           }
-    
-           if orientationNew == orientationLast {
-               return
-           }
-           orientationLast = orientationNew
-       }
+//    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+//        return .landscape
+//    }
+//
+//        func initializeMotionManager() {
+//         motionManager = CMMotionManager()
+//         motionManager?.accelerometerUpdateInterval = 0.2
+//         motionManager?.gyroUpdateInterval = 0.2
+//         motionManager?.startAccelerometerUpdates(to: (OperationQueue.current)!, withHandler: {
+//            (accelerometerData, error) -> Void in
+//            if error == nil {
+//                self.outputAccelertionData((accelerometerData?.acceleration)!)
+//            }
+//            else {
+//                print("\(error!)")
+//            }
+//            })
+//         }
+//
+//        func outputAccelertionData(_ acceleration: CMAcceleration) {
+//           var orientationNew: UIInterfaceOrientation
+//           if acceleration.x >= 0.75 {
+//               orientationNew = .landscapeLeft
+//
+//            //print("landscapeLeft")
+//           }
+//           else if acceleration.x <= -0.75 {
+//               orientationNew = .landscapeRight
+//            //print("landscapeRight")
+//           }
+//           else if acceleration.y <= -0.75 {
+//               orientationNew = .portrait
+//           // performSegue(withIdentifier: "Mood Seque", sender: nil)
+//            //print("portrait")q
+//                //UIView.setAnimationsEnabled(false)
+//                performSegue(withIdentifier: "Mood Segue", sender: nil)
+//
+//           }
+//           else if acceleration.y >= 0.75 {
+//               orientationNew = .portraitUpsideDown
+//            //performSegue(withIdentifier: "Mood Seque", sender: nil)
+//            //print("portraitUpsideDown")
+//                //UIView.setAnimationsEnabled(false)
+//                performSegue(withIdentifier: "Mood Segue", sender: nil)
+//           }
+//           else {
+//               // Consider same as last time
+//               return
+//           }
+//
+//           if orientationNew == orientationLast {
+//               return
+//           }
+//           orientationLast = orientationNew
+//       }
     
 }
