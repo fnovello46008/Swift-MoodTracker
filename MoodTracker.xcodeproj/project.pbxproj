@@ -20,6 +20,7 @@
 		7EBB60B1254F4034008C9037 /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBB60B0254F4034008C9037 /* LineChartViewController.swift */; };
 		7EC01D1D2555BE1700848F02 /* MoodsModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7EC01D1B2555BE1700848F02 /* MoodsModel.xcdatamodeld */; };
 		7EC16D01254E0EE3002367F6 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC16D00254E0EE3002367F6 /* GraphViewController.swift */; };
+		7EC411EC25587E3A0048B7E5 /* Mood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC411EB25587E3A0048B7E5 /* Mood.swift */; };
 		7EDB08C92550552E008EC34D /* MoodBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDB08C82550552E008EC34D /* MoodBar.swift */; };
 		C982B23A5C0CC400A7946D72 /* Pods_MoodTracker_MoodTrackerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 766B0D3738C255C1BF5CE6EE /* Pods_MoodTracker_MoodTrackerUITests.framework */; };
 /* End PBXBuildFile section */
@@ -63,6 +64,7 @@
 		7EBB60B0254F4034008C9037 /* LineChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartViewController.swift; sourceTree = "<group>"; };
 		7EC01D1C2555BE1700848F02 /* MoodsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoodsModel.xcdatamodel; sourceTree = "<group>"; };
 		7EC16D00254E0EE3002367F6 /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
+		7EC411EB25587E3A0048B7E5 /* Mood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mood.swift; sourceTree = "<group>"; };
 		7EDB08C82550552E008EC34D /* MoodBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodBar.swift; sourceTree = "<group>"; };
 		8AA06582FE976744634C93EF /* Pods_MoodTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoodTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B03D8C70D707354CF210C73D /* Pods-MoodTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoodTrackerTests.debug.xcconfig"; path = "Target Support Files/Pods-MoodTrackerTests/Pods-MoodTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -140,10 +142,11 @@
 				7E3845FC254CF8B200BD39F1 /* AppDelegate.swift */,
 				7E3845FE254CF8B200BD39F1 /* SceneDelegate.swift */,
 				7E384600254CF8B200BD39F1 /* ViewController.swift */,
-				7EDB08C82550552E008EC34D /* MoodBar.swift */,
-				7E384605254CF8B200BD39F1 /* Assets.xcassets */,
-				7EC01D1B2555BE1700848F02 /* MoodsModel.xcdatamodeld */,
 				7EBB60B0254F4034008C9037 /* LineChartViewController.swift */,
+				7EC411EB25587E3A0048B7E5 /* Mood.swift */,
+				7EDB08C82550552E008EC34D /* MoodBar.swift */,
+				7EC01D1B2555BE1700848F02 /* MoodsModel.xcdatamodeld */,
+				7E384605254CF8B200BD39F1 /* Assets.xcassets */,
 				7EC16D00254E0EE3002367F6 /* GraphViewController.swift */,
 				7E384634254D032900BD39F1 /* Main.storyboard */,
 				7E384607254CF8B200BD39F1 /* LaunchScreen.storyboard */,
@@ -422,6 +425,7 @@
 				7EC16D01254E0EE3002367F6 /* GraphViewController.swift in Sources */,
 				7EC01D1D2555BE1700848F02 /* MoodsModel.xcdatamodeld in Sources */,
 				7EDB08C92550552E008EC34D /* MoodBar.swift in Sources */,
+				7EC411EC25587E3A0048B7E5 /* Mood.swift in Sources */,
 				7E3845FD254CF8B200BD39F1 /* AppDelegate.swift in Sources */,
 				7E3845FF254CF8B200BD39F1 /* SceneDelegate.swift in Sources */,
 				7EBB60B1254F4034008C9037 /* LineChartViewController.swift in Sources */,

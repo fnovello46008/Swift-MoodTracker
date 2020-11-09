@@ -20,8 +20,7 @@ class ViewController: UIViewController {
     
     var backgroundColours = [UIColor()]
     var backgroundLoop = 0
-      
-    var didSubmit = false
+    
   
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
@@ -51,7 +50,33 @@ class ViewController: UIViewController {
             try manageContext.save()
             coreDataMoodValues.append(coreMoodValue)
             
-            print("MoodValues\(coreDataMoodValues)")
+            //print("MoodValues\(coreDataMoodValues)")
+        }catch let error as NSError{
+            print("could not save to core data\(error)")
+        }
+        
+    }
+    
+    func saveMood(mood: Mood)
+    {
+        guard let appDelegate = UIApplication.shared.delegate
+                as? AppDelegate else {return}
+        
+        let manageContext = appDelegate.persistentContainer.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: "MoodValueEntity", in: manageContext)!
+        
+        let coreDataMood = NSManagedObject(entity: entity, insertInto: manageContext)
+        
+        coreDataMood.setValue(mood.moodValue,      forKey: "moodValue")
+        coreDataMood.setValue(mood.moodNote,       forKey: "moodNote")
+        coreDataMood.setValue(mood.moodDate, forKey: "moodDate")
+        
+        do {
+            try manageContext.save()
+            coreDataMoodValues.append(coreDataMood)
+            
+            //print("MoodValues\(coreDataMoodValues)")
         }catch let error as NSError{
             print("could not save to core data\(error)")
         }
@@ -61,28 +86,29 @@ class ViewController: UIViewController {
     
     func deleteAllData(entity:String)
     {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
-        fetchRequest.returnsObjectsAsFaults = false
-       
+        
+        let context = appDelegate.persistentContainer.viewContext
+
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+
         do {
-            let results = try appDelegate.persistentContainer.viewContext.fetch(fetchRequest)
-            for object in results
-            {
-                guard let objectData = object as? NSManagedObject else {continue}
-                appDelegate.persistentContainer.viewContext.delete(objectData)
-            }
-        } catch let error {
-            print("Detele all data in \(entity) error :", error)
+            try context.execute(deleteRequest)
+            try context.save()
+            print("deleted data")
+        } catch {
+            print ("There was an error")
         }
         
     }
+    
+    
+    
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        
 
-    
         
     }
     
@@ -97,7 +123,7 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
         
-
+        //self.deleteAllData(entity: "MoodValueEntity")
         
         //print(self.appDelegate.moodValues)
         
@@ -118,8 +144,6 @@ class ViewController: UIViewController {
         
         
         
-    
-
     }
     
     
@@ -170,7 +194,7 @@ class ViewController: UIViewController {
         }
         
         updateBackgroundColors(moodValue: sender.value)
-        print(sender.value)
+        //print(sender.value)
     }
     
     func updateBackgroundColors(moodValue:Float)
@@ -231,9 +255,9 @@ class ViewController: UIViewController {
 
            
             
-            vc.moodValues = self.appDelegate.moodValues
-
-            print("mood submitted \(self.appDelegate.moodValues)")
+            //vc.moodValues = self.appDelegate.moodValues
+            vc.moods = self.appDelegate.moods
+            //print("mood submitted \(self.appDelegate.moodValues)")
 
 
         }
@@ -253,7 +277,8 @@ class ViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
                 //run your function here
             
-                self.appDelegate.moodValues = []
+                //self.appDelegate.moodValues = []
+                self.appDelegate.moods = []
                 self.deleteAllData(entity: "MoodValueEntity")
             
             }))
@@ -271,9 +296,9 @@ class ViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
                 //run your function here
+            
                 self.submitHandler()
-                self.appDelegate.moodValues.append(Double(self.MoodSlider.value * 100))
-                self.save(moodValue: Double(self.MoodSlider.value * 100))
+        
             
             }))
 
@@ -287,12 +312,12 @@ class ViewController: UIViewController {
     
     func submitHandler()
     {
-//        let alert = UIAlertController(title: "Mood Submitted", message: "Your mood has been submitted.. Rotate your phone to see your graph", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-//        self.present(alert, animated: true)
+//        self.appDelegate.moodValues.append(Double(self.MoodSlider.value * 100))
+//        self.save(moodValue: Double(self.MoodSlider.value * 100))
         
-        didSubmit = true
-      
+        //NEW
+        self.appDelegate.moods.append(Mood(submitMoodWithValue: Double(self.MoodSlider.value * 100), moodNote: "", moodDate: Date()))
+        self.saveMood(mood: Mood(submitMoodWithValue: Double(self.MoodSlider.value * 100), moodNote: "", moodDate: Date()))
     }
     
     func animateBackgroundColour () {

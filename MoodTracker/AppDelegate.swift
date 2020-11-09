@@ -13,11 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var moodValues:[Double] = []
     var coreDataMoodValues:[NSManagedObject] = []
-
+    
+    var moods:[Mood] = []
+    var calander: Calendar = Calendar.current
+   
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-        
         
         
         
@@ -29,12 +31,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             coreDataMoodValues = try manageContext.fetch(fetchRequest)
             //print(coreDataMoodValues[1].value(forKey: "moodValue"))
             
-            for moodvalue in coreDataMoodValues
+//            for moodvalue in coreDataMoodValues
+//            {
+//                self.moodValues.append(moodvalue.value(forKey: "moodValue") as! Double)
+//
+//            }
+            
+            for mood in coreDataMoodValues
             {
-                self.moodValues.append(moodvalue.value(forKey: "moodValue") as! Double)
+                if mood.value(forKey: "moodDate") == nil
+                {
+                    mood.setValue(Date(), forKey: "moodDate")
+                }
+                   
+                
+                self.moods.append(Mood(submitMoodWithValue: mood.value(forKey: "moodValue") as! Double, moodNote: "", moodDate: mood.value(forKey: "moodDate") as! Date))
+                                
+            }
+            
+            for mood in moods
+            {
+                print("mood value: \(mood.moodValue)")
+                print("\(calander.component(.hour, from: mood.moodDate)):\(calander.component(.minute, from: mood.moodDate)):\(calander.component(.second, from: mood.moodDate))")
                 
             }
-            print("application launched\(moodValues)")
+     
+            
+            //print("application launched\(moodValues)")
             
         }catch let error as NSError{
             print("could not fetch \(error)")
