@@ -209,7 +209,7 @@ class ViewController: UIViewController,ChartViewDelegate {
         super.viewDidLoad()
         self.chartView.delegate = self
         
-       // self.deleteAllData(entity: "MoodValueEntity")
+       self.deleteAllData(entity: "MoodValueEntity")
         
         //print(self.appDelegate.moodValues)
         
@@ -281,11 +281,73 @@ class ViewController: UIViewController,ChartViewDelegate {
     
 
     
-    
+    var circleColors = [NSUIColor]()
+
+  func colorPicker(value : Double) -> NSUIColor {
+  
+       //input your own logic for how you actually want to color
+       if value > 100 || value < 50 {
+           return NSUIColor.red
+       }
+       else {
+           return NSUIColor.black
+       }
+   }
+
+   func setDataCount(_ count: Int, range: Double)
+   {
+       // MARK: ChartDataEntry
+       var values = [ChartDataEntry]()
+       var valueColors = [NSUIColor]()
+     
+       for i in 0..<count {
+           let val: Double = Double(arc4random_uniform(UInt32(range)) + 3)
+           values.append(ChartDataEntry(x: Double(i), y: val))
+           valueColors.append(colorPicker(value: val))
+           circleColors.append(colorPicker(value: val))
+       }
+
+       // MARK: LineChartDataSet
+       var set1 = LineChartDataSet()
+        set1 = LineChartDataSet(entries: values, label: "DataSet 1")
+           set1.circleRadius = 6.0
+            
+           set1.circleColors = circleColors
+           set1.valueColors = valueColors
+           
+           set1.highlightLineDashLengths = [5.0, 2.5]
+           set1.highlightColor = NSUIColor.green
+           set1.highlightLineWidth = 2.0
+
+           var dataSets = [LineChartDataSet]()
+           dataSets.append(set1)
+           
+           // MARK: LineChartData
+           let data = LineChartData(dataSets: dataSets)
+           chartView.data = data
+       }
+
+
     
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         
+                
         dismissKeyboard()
+        
+        print("chartValueSelected : x = \(highlight.x) y = \(highlight.y)")
+         
+         var set1 = LineChartDataSet()
+         set1 = (chartView.data?.dataSets[0] as? LineChartDataSet)!
+        let values = set1.entries
+        let index = values.firstIndex(where: {$0.x == highlight.x})  // search index
+
+         set1.circleColors = circleColors
+         set1.circleColors[index!] = NSUIColor.cyan
+         
+         chartView.data?.notifyDataChanged()
+         chartView.notifyDataSetChanged()
+        
+        
         for mood in appDelegate.moods
         {
             if(mood.coords.x == entry.x && mood.coords.y == entry.y)
@@ -340,16 +402,23 @@ class ViewController: UIViewController,ChartViewDelegate {
 //        i = i + 1
 //    }
     
+    
+    
     @objc func updateGraph(){
         var lineChartEntry  = [ChartDataEntry]() //this is the Array that will eventually be displayed on the graph.
         //print("updating")
         
         //here is the for loop
         
+        var valueColors = [NSUIColor]()
+      
+
         for i in 0..<appDelegate.moods.count {
             
             
-            moodCoordsValues.x = (appDelegate.moods[i].moodDate.timeIntervalSince1970 * 1000).rounded()
+           // moodCoordsValues.x = NSDate().timeIntervalSince(appDelegate.moods[i].moodDate) / 60
+            moodCoordsValues.x  = (appDelegate.moods[i].moodDate.timeIntervalSince1970 * 1000)
+            
             moodCoordsValues.y = appDelegate.moods[i].moodValue
             
             appDelegate.moods[i].setMood(AtCoordinate: moodCoordsValues.x, y: moodCoordsValues.y)
@@ -358,6 +427,9 @@ class ViewController: UIViewController,ChartViewDelegate {
             let value = ChartDataEntry(x:moodCoordsValues.x, y: moodCoordsValues.y) // here we set the X and Y status in a data chart entry
             
             lineChartEntry.append(value) // here we add it to the data set
+            
+            //lineChartEntry.insert(value, at: 0)
+            
         }
         
 //        if(appDelegate.moods.count > 0)
@@ -377,16 +449,30 @@ class ViewController: UIViewController,ChartViewDelegate {
 //        }
         
        // self.chartView.moveViewToX(appDelegate.moods.last!.coords.x+1000000)
-
-        let line1 = LineChartDataSet(entries: lineChartEntry, label: "Number") //Here we convert lineChartEntry to a LineChartDataSet
+        
+        
+        //let line1 = LineChartDataSet(entries: lineChartEntry.reversed(), label: "Number") //Here we convert lineChartEntry to a LineChartDataSet
+        let line1 = LineChartDataSet(entries: lineChartEntry, label: "Number")
         line1.colors = [NSUIColor.white] //Sets the colour to blue
         //line1.mode = .horizontalBezier
         //line1.colors = ChartColorTemplates.joyful()
         //line1.drawFilledEnabled = true
         //line1.fillColor = UIColor(red: 149/255, green: 125/255, blue: 173/255, alpha: 1)
         line1.fillAlpha = 0.5
+        line1.circleColors[0] = UIColor.red
+        
         
         line1.highlightColor = UIColor.black
+        var values = [ChartDataEntry]()
+        for i in 0..<appDelegate.moods.count {
+            let val: Double = Double(arc4random_uniform(UInt32(Double(i))) + 3)
+            values.append(ChartDataEntry(x: Double(i), y: val))
+            valueColors.append(colorPicker(value: val))
+            circleColors.append(colorPicker(value: val))
+        }
+        
+        
+        line1.valueColors = valueColors
         
         let gradientColors = [
             UIColor.purple.cgColor,
@@ -402,9 +488,11 @@ class ViewController: UIViewController,ChartViewDelegate {
         line1.fill = Fill.fillWithLinearGradient(gradient!, angle: 90.0) // Set the Gradient
         line1.drawFilledEnabled = true // Draw the Gradient
         
-        
+        //line1.colors = gradientColors as! [NSUIColor]
         
         let data = LineChartData() //This is the object that will be added to the chart
+        
+        
         data.addDataSet(line1) //Adds the line to the dataSet
         
         data.setDrawValues(true)
@@ -435,6 +523,8 @@ class ViewController: UIViewController,ChartViewDelegate {
         chartView.drawGridBackgroundEnabled = false
         
         chartView.rightAxis.drawGridLinesEnabled = false
+        
+        //chartView.animate(xAxisDuration: 0.5)
         
         //chtChart.backgroundColor = UIColor(red: 38/255, green: 38/255, blue: 38/255, alpha: 1)
 
@@ -672,6 +762,7 @@ class ViewController: UIViewController,ChartViewDelegate {
         
     }
     
+    var datacount = 0.0;
     func submitHandler()
     {
 //        self.appDelegate.moodValues.append(Double(self.MoodSlider.value * 100))
@@ -682,6 +773,8 @@ class ViewController: UIViewController,ChartViewDelegate {
         self.saveMood(mood: Mood(submitMoodWithValue: Double(self.MoodSlider.value * 100), moodDate: Date(),coords: Mood.CoordinateValues(x: 50, y: 50)))
         
         updateGraph()
+        self.datacount+=1
+        //self.setDataCount(Int(datacount.rounded()), range: datacount)
         
     }
     
